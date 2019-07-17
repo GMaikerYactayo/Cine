@@ -84,9 +84,7 @@ public class PeliculaImpl extends Conexion implements ICRUD<Pelicula> {
         Pelicula pel;
         try {
             this.conectar();
-            String sql = "SELECT IDPEL,NOMPEL,GENPEL,RESTPEL,LENPEL,DURPEL,\n"
-                    + "	CONVERT(CHAR(5), HORPEL, 108) AS HORPEL, \n"
-                    + "	CONVERT(VARCHAR(20), FECPEL, 106) AS FECPEL, ESTPEL FROM PELICULA";
+            String sql = "SELECT * FROM VW_PELICULA WHERE ESTPEL='A'";
             listado = new ArrayList();
             Statement st = this.getCn().createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -96,6 +94,7 @@ public class PeliculaImpl extends Conexion implements ICRUD<Pelicula> {
                 pel.setNOMPEL(rs.getString("NOMPEL"));
                 pel.setGENPEL(rs.getString("GENPEL"));
                 pel.setRESTPEL(rs.getString("RESTPEL"));
+                pel.setTIPPEL(rs.getString("TIPPEL"));
                 pel.setLENPEL(rs.getString("LENPEL"));
                 pel.setDURPEL(rs.getString("DURPEL"));
                 pel.setHORPEL(rs.getString("HORPEL"));

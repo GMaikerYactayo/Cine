@@ -1,5 +1,6 @@
 package modelo;
 
+
 public class Pelicula {
 
     private int IDPEL;
@@ -85,6 +86,8 @@ public class Pelicula {
         this.FECPEL = FECPEL;
     }
 
+    
+    
     public String getESTPEL() {
         return ESTPEL;
     }

@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <title>CINEVG</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <p:breadCrumb>
+                <p:menuitem value="DASHBOARD" url="" />
+                <p:menuitem value="CARTELERA" url="../Cartelara/LstCartelera.xhtml" />
+                <p:menuitem value="CLIENTE" url="" />
+                <p:menuitem value="EMPLEADO" url="" />
+                <p:menuitem value="PELICULA" url="../Pelicula/LstPelicula.xhtml" />
+                <p:menuitem value="SALAS" url="" />
+            </p:breadCrumb>
+        </h:form>
+        <div class="main-panel">
+            <ui:insert name="menu"/>
+        </div>
+    </h:body>
+</html>

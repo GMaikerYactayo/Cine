@@ -73,13 +73,6 @@
 
                 <f:facet name="header">
                     PELICULAS
-                    
-                        <div style="float:right;padding-top: 5px;">
-                            <h:commandLink  actionListener="#{peliculaC.REPORTE_PDF_PELICULA(pelicula)}">
-                                <p:graphicImage url="../../imagenes/PDF-logo.png" width="35" title="Descargar Reporte"/>
-                            </h:commandLink>
-                        </div>
-                    
                 </f:facet   >
 
                 <p:column headerText="NOMBRE" filterBy="#{lista.NOMPEL}" filterMatchMode="contains" >
@@ -121,7 +114,6 @@
                     EN TOTAL HAY #{fn:length(peliculaC.listadoPel)} REGISTROS.
                 </f:facet>
             </p:dataTable>
-
             <p:contextMenu for="dtTable">
                 <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" actionListener="#{peliculaC.rellenar()}"
                             oncomplete="PF('wdlgDatos').show()"/>

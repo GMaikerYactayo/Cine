@@ -27,4 +27,16 @@ public class report extends Conexion {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
+    public void exportarPDF_Cartelera(Map parameters) throws JRException, IOException, Exception {
+        this.conectar();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/Cartelera.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=PELICULA.pdf");
+        try (ServletOutputStream stream = response.getOutputStream()) {
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+            stream.flush();
+        }
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 }

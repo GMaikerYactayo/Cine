@@ -12,12 +12,25 @@
         <p:growl autoUpdate="true" showDetail="true" id="messages"  />
         <center>
             <h:form id="formIns">
-                <h1 style="margin-top:0">REGISTRAR PELICULA</h1>
+                <h1 style="color: #0066ff;margin-top:0">REGISTRAR PELICULA</h1>
                 <p:panelGrid columns="4">
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{peliculaC.pelicula.NOMPEL}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita el nombre"/>
                     <p:outputLabel value="Genero"/>
-                    <p:inputText value="#{peliculaC.pelicula.GENPEL}" maxlength="50" onkeyup="this.value = this.value.toUpperCase()" required="true" requiredMessage="Se necesita el genero"/>
+                    <p:selectOneMenu id="consol" value="#{peliculaC.pelicula.GENPEL}" style="width:200px">
+                        <f:selectItem itemLabel="SELECCIONE" itemValue="" />
+                        <f:selectItem itemLabel="Acción" itemValue="Acción" />
+                        <f:selectItem itemLabel="Animación" itemValue="Animación" />
+                        <f:selectItem itemLabel="Aventura" itemValue="Aventura" />
+                        <f:selectItem itemLabel="Bélico" itemValue="Bélico" />
+                        <f:selectItem itemLabel="Ciencia ficción" itemValue="Ciencia ficción" />
+                        <f:selectItem itemLabel="Comedia" itemValue="Comedia" />
+                        <f:selectItem itemLabel="Drama" itemValue="Drama" />
+                        <f:selectItem itemLabel="Intriga" itemValue="Intriga" />
+                        <f:selectItem itemLabel="Musical" itemValue="Musical" />
+                        <f:selectItem itemLabel="Romance" itemValue="Romance" />
+                        <f:selectItem itemLabel="Terror" itemValue="Terror" />
+                    </p:selectOneMenu>
                     <p:outputLabel value="Restricción" />
                     <p:inputText id="res" value="#{peliculaC.pelicula.RESTPEL}" maxlength="3">
                         <p:tooltip position="bottom" for="res" value="+##"/>
@@ -37,7 +50,7 @@
                     <p:calendar value="#{peliculaC.fechaFormulario}" locale="es" navigator="true" pattern="dd/MMM/yyyy" 
                                 yearRange="-100:+0" readonlyInput="true"/>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" actionListener="#{peliculaC.registrar()}" update="formIns :form:dtTable"/> 
+                <p:commandButton value="Registrar" style="color: #ffffff; background-color: #ff0033" actionListener="#{peliculaC.registrar()}" update="formIns :form:dtTable"/> 
             </h:form>
         </center>
 
@@ -47,10 +60,11 @@
                          var="lista" 
                          id="dtTable" 
                          selectionMode="single"
-                         filteredValue="#{peliculaC.listadoPel}"
+                         filteredValue="#{peliculaC.listadoPel2}"
                          paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" 
                          rowKey="#{lista.IDPEL}"
+                         sortBy="#{lista.GENPEL}"
                          rows="8" 
                          selection="#{peliculaC.select}"
                          style="margin-bottom:20px">
@@ -66,7 +80,7 @@
                         <h:outputText value="#{lista.NOMPEL}" />
                     </center>
                 </p:column>
-                <p:column headerText="GENERO"  filterBy="#{lista.GENPEL}" filterMatchMode="contains" >
+                <p:column headerText="GENERO"  >
                     <center>
                         <h:outputText value="#{lista.GENPEL}" />
                     </center>
@@ -93,9 +107,7 @@
                 </p:column>
                 <p:column headerText="FECHA" >
                     <center>
-                        <h:outputText value="#{lista.FECPEL}">
-                            <f:convertDateTime pattern="dd / MMM /yyyy" locale="es"/>
-                        </h:outputText>
+                        <h:outputText value="#{lista.FECPEL}"/>
                     </center>
                 </p:column>
                 <f:facet name="footer">
@@ -115,7 +127,20 @@
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{peliculaC.select.NOMPEL}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita el nombre"/>
                     <p:outputLabel value="Genero"/>
-                    <p:inputText value="#{peliculaC.select.GENPEL}" maxlength="50" onkeyup="this.value = this.value.toUpperCase()" required="true" requiredMessage="Se necesita el genero"/>
+                    <p:selectOneMenu id="consol" value="#{peliculaC.select.GENPEL}" style="width:200px">
+                        <f:selectItem itemLabel="SELECCIONE" itemValue="" />
+                        <f:selectItem itemLabel="Acción" itemValue="Acción" />
+                        <f:selectItem itemLabel="Animación" itemValue="Animación" />
+                        <f:selectItem itemLabel="Aventura" itemValue="Aventura" />
+                        <f:selectItem itemLabel="Bélico" itemValue="Bélico" />
+                        <f:selectItem itemLabel="Ciencia ficción" itemValue="Ciencia ficción" />
+                        <f:selectItem itemLabel="Comedia" itemValue="Comedia" />
+                        <f:selectItem itemLabel="Drama" itemValue="Drama" />
+                        <f:selectItem itemLabel="Intriga" itemValue="Intriga" />
+                        <f:selectItem itemLabel="Musical" itemValue="Musical" />
+                        <f:selectItem itemLabel="Romance" itemValue="Romance" />
+                        <f:selectItem itemLabel="Terror" itemValue="Terror" />
+                    </p:selectOneMenu>
                     <p:outputLabel value="Restricción" />
                     <p:inputText id="res" value="#{peliculaC.select.RESTPEL}" maxlength="3">
                         <p:tooltip position="bottom" for="res" value="+##"/>

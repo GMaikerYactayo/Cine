@@ -16,7 +16,7 @@ public class PeliculaImpl extends Conexion implements ICRUD<Pelicula> {
             this.conectar();
             String sql = "insert into PELICULA"
                     + "(NOMPEL,GENPEL,RESTPEL,LENPEL,DURPEL,HORPEL,FECPEL,ESTPEL)"
-                    + "values (?,?,?,?,?,?,?,?,?)";
+                    + "values (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = this.getCn().prepareStatement(sql);
             ps.setString(1, pelicula.getNOMPEL());
             ps.setString(2, pelicula.getGENPEL());

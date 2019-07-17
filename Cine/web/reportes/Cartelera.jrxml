@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-07-17T17:33:04 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Empleado" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Cine"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="IlZXX0NBUlRFTEVSQSIgLDE1LDE1LDYxZTA2NDQwLTNmZWUtNDJlOS04MmM0LTJlYzAxYjVmY2ZlYzs="/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDataset" uuid="6e0f7958-e1cc-4216-815e-eef281786275">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT *
+FROM "VW_CARTELERA"]]>
+	</queryString>
+	<field name="IDCAR" class="java.lang.Integer"/>
+	<field name="PRECAR" class="java.math.BigDecimal"/>
+	<field name="HORCAR" class="java.lang.String"/>
+	<field name="FECCAR" class="java.lang.String"/>
+	<field name="IDPEL" class="java.lang.Integer"/>
+	<field name="NOMPEL" class="java.lang.String"/>
+	<field name="ESTCAR" class="java.lang.String"/>
+	<title>
+		<band height="84" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="7" width="801" height="48" forecolor="#5E5135" backcolor="#5E5135" uuid="945e9375-df88-42b6-a71b-1eb061e2a1bc"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="802" height="62" forecolor="#FFFFFF" uuid="a080d2ca-6207-4d8e-87c9-d3b61fb495a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="31"/>
+				</textElement>
+				<text><![CDATA[Cine VG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="1" y="62" width="799" height="22" uuid="0d849401-f944-4163-9df0-f69408a0618a"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Cartelera]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="115" y="2" width="50" height="20" forecolor="#5E5135" uuid="8edd6722-4325-4244-8caf-58010f015f92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="2" width="100" height="20" forecolor="#5E5135" uuid="5b6d2db0-02e4-4f95-a44a-01223c3c5cd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="2" width="100" height="20" forecolor="#5E5135" uuid="ce833b78-9dd3-44de-87ac-a8d07e79f149"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="2" width="75" height="20" forecolor="#5E5135" uuid="3938f127-6c93-4b7a-8134-301834eb0eec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="2" width="130" height="20" forecolor="#5E5135" uuid="421ce5a8-c3b9-4aa2-94ff-5b8515f388ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO DE PELÍCULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="570" y="2" width="159" height="20" forecolor="#5E5135" uuid="2b0cbd1b-c921-402a-b229-f55828add52b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PELICULA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="115" y="0" width="50" height="20" uuid="00aedc11-7c82-4713-a93a-e8b69bece9a8"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IDCAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="100" height="20" uuid="3743fdbd-776d-4c01-be75-3aeeac925674"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRECAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="0" width="100" height="20" uuid="eda6d25a-947d-45fc-85c9-bdfc4ba91a4e"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{HORCAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="0" width="75" height="20" uuid="4014a466-6364-463d-a5f5-a38e53baed63"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECCAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="130" height="20" uuid="377ee65f-4167-493b-90d1-4b780c0fd2dc"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IDPEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="570" y="0" width="159" height="20" uuid="42af17ed-022c-4f41-84d0-3a43744f4235"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMPEL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f2324113-3563-4f48-b688-ed82b3098434"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#5E5135" uuid="9f676d3f-1486-4a48-96ce-fa0a2b7a1577"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#5E5135" uuid="7415bd49-92ea-42ab-bbad-d370dba3cd03"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#5E5135" uuid="8bf88488-fb5e-4676-a772-33cfbcf173cd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

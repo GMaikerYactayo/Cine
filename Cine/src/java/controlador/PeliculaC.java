@@ -23,7 +23,7 @@ public class PeliculaC implements Serializable {
     private List<Pelicula> listadoPel;
     private List<Pelicula> listadoPel2;
     SimpleDateFormat formateador = new SimpleDateFormat("dd/MMM/yyyy");
-    SimpleDateFormat sdf_d = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH);
     private Date fechaFormulario = null;
     
     @PostConstruct

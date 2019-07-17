@@ -22,8 +22,6 @@
                     <p:inputText id="res" value="#{peliculaC.pelicula.RESTPEL}" maxlength="3">
                         <p:tooltip position="bottom" for="res" value="+##"/>
                     </p:inputText>
-                    <p:outputLabel value="Tipo" />
-                    <p:inputText  value="#{peliculaC.pelicula.TIPPEL}" maxlength="3"/>
                     <p:outputLabel value="Lenguaje"/>
                     <p:selectOneRadio id="console" value="#{peliculaC.pelicula.LENPEL}" >
                         <f:selectItem itemLabel="Español" itemValue="Español" />
@@ -76,11 +74,6 @@
                 <p:column headerText="RESTRICCON" style="width: 140px">
                     <center>
                         <h:outputText value="#{lista.RESTPEL}" />
-                    </center>
-                </p:column>
-                <p:column headerText="TIPO" style="width: 140px">
-                    <center>
-                        <h:outputText value="#{lista.TIPPEL}" />
                     </center>
                 </p:column>
                 <p:column headerText="LENGUAJE" style="width: 100px" >

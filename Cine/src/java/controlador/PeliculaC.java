@@ -1,5 +1,6 @@
 package controlador;
 
+import Reportes.report;
 import dao.PeliculaImpl;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -7,8 +8,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -23,9 +26,9 @@ public class PeliculaC implements Serializable {
     private List<Pelicula> listadoPel;
     private List<Pelicula> listadoPel2;
     SimpleDateFormat formateador = new SimpleDateFormat("dd/MMM/yyyy");
-    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH);
+    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
     private Date fechaFormulario = null;
-    
+
     @PostConstruct
     public void iniciar() {
         try {
@@ -52,7 +55,7 @@ public class PeliculaC implements Serializable {
         PeliculaImpl dao;
         sdf_d = new SimpleDateFormat("MM-dd-yyyy");
         try {
-            
+
             System.out.println(sdf_d.format(fechaFormulario));
             select.setFECPEL(sdf_d.format(fechaFormulario));
             dao = new PeliculaImpl();
@@ -65,7 +68,7 @@ public class PeliculaC implements Serializable {
             throw e;
         }
     }
-    
+
     public void rellenar() throws Exception {
         System.out.println(sdf_d.parse(select.getFECPEL()));
         fechaFormulario = sdf_d.parse(select.getFECPEL());
@@ -84,7 +87,6 @@ public class PeliculaC implements Serializable {
             throw e;
         }
     }
-    
 
     public void listar() throws Exception {
         PeliculaImpl dao;
@@ -96,6 +98,17 @@ public class PeliculaC implements Serializable {
         }
     }
 
+    public void REPORTE_PDF_PELICULA(String pelicula) throws Exception {
+        report reportPeli = new report();
+        try {
+            Map<String, Object> parameters = new HashMap(); // Libro de parametros
+            parameters.put(null, pelicula); //Insertamos un parametro
+            reportPeli.exportarPDF_PELICULA(parameters); //Pido exportar Reporte con los parametros
+//            report.exportarPDF2(parameters);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
     public void limpiar() throws Exception {
         pelicula = new Pelicula();
@@ -150,6 +163,4 @@ public class PeliculaC implements Serializable {
         this.fechaFormulario = fechaFormulario;
     }
 
-    
-    
 }

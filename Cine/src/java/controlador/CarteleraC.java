@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,6 +23,7 @@ public class CarteleraC implements Serializable {
     private List<Cartelera> listadoCar;
     CarteleraImpl dao;
     SimpleDateFormat formateador = new SimpleDateFormat("dd/MMM/yyyy");
+    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH);
     private Date fechaFormulario;
 
     @PostConstruct
@@ -32,13 +34,18 @@ public class CarteleraC implements Serializable {
         }
     }
 
+    public void rellenar() throws Exception {
+        System.out.println(sdf_d.parse(select.getFECCAR()));
+        fechaFormulario = sdf_d.parse(select.getFECCAR());
+    }
+    
     public void registrar() throws Exception {
         try {
             dao = new CarteleraImpl();
             cartelera.setFECCAR(formateador.format(fechaFormulario));
             dao.regitrar(cartelera);
-            listar();
             limpiar();
+            listar();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro", "Completado..."));
         } catch (Exception e) {
@@ -49,7 +56,7 @@ public class CarteleraC implements Serializable {
     public void modificar() throws Exception {
         try {
             dao = new CarteleraImpl();
-            cartelera.setFECCAR(formateador.format(fechaFormulario));
+            select.setFECCAR(formateador.format(fechaFormulario));
             dao.modificar(select);
             listar();
             FacesContext.getCurrentInstance().addMessage(null,
@@ -128,4 +135,22 @@ public class CarteleraC implements Serializable {
         this.fechaFormulario = fechaFormulario;
     }
 
+    public CarteleraImpl getDao() {
+        return dao;
+    }
+
+    public void setDao(CarteleraImpl dao) {
+        this.dao = dao;
+    }
+
+    public SimpleDateFormat getSdf_d() {
+        return sdf_d;
+    }
+
+    public void setSdf_d(SimpleDateFormat sdf_d) {
+        this.sdf_d = sdf_d;
+    }
+
+    
+    
 }

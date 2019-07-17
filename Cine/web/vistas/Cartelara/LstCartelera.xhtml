@@ -11,24 +11,26 @@
 
     </h:head>
     <h:body>
-        <p:growl id="growl" showDetail="true" sticky="true">
+        <p:growl id="growl" showDetail="true" >
             <p:autoUpdate/>
         </p:growl>
         <center>
             <h:form>
-                <p:growl showDetail="true" id="messages" />
                 <h:form id="formIns">
                     <h1 style="margin-top:0">Registrar cartelera</h1>
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Pelicula"/>
-                        <p:autoComplete  value="#{carteleraC.select.IDPEL}" completeMethod="#{carteleraC.completeTextPelicula}" required="true" requiredMessage="Se necesita la pelicula"/>
+                        <p:selectOneMenu id="advanced" value="#{carteleraC.cartelera.IDPEL}"  panelStyle="width:180px"
+                                         effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
+                            <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
+                        </p:selectOneMenu>
                         <p:outputLabel value="Hora"/>
-                        <p:inputMask value="#{carteleraC.select.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
+                        <p:inputMask value="#{carteleraC.cartelera.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
                         <p:outputLabel value="Fecha"   />
                         <p:calendar id="button" value="#{carteleraC.fechaFormulario}"  showOn="button" navigator="true" pattern="dd/MMM/yyyy" 
                                     required="true" style="width: 400px" requiredMessage="Se requiere la fecha"/>
                         <p:outputLabel value="Precio"/>
-                        <p:inputNumber value="#{carteleraC.select.PRECAR}" required="true" decimalPlaces="2" 
+                        <p:inputNumber value="#{carteleraC.cartelera.PRECAR}" required="true" decimalPlaces="2" 
                                        maxValue="99.99"
                                        requiredMessage="Se nesecita el precio"/>
                     </p:panelGrid>
@@ -53,16 +55,16 @@
                     <p:autoUpdate />
 
                     <p:column headerText="Pelicula">
-                            <h:outputText value="#{lista.IDPEL}" />
+                        <h:outputText value="#{lista.NOMPEL}" />
                     </p:column>
                     <p:column headerText="Hora" >
-                            <h:outputText value="#{lista.HORCAR}" />
+                        <h:outputText value="#{lista.HORCAR}" />
                     </p:column>
                     <p:column headerText="Fecha" >
-                            <h:outputText value="#{lista.FECCAR}" />
+                        <h:outputText value="#{lista.FECCAR}" />
                     </p:column>
                     <p:column headerText="Precio" >
-                            <h:outputText value="#{lista.PRECAR}" />
+                        <h:outputText value="#{lista.PRECAR}" />
                     </p:column>
 
                     <f:facet name="footer">
@@ -73,7 +75,8 @@
                     </f:facet>
                 </p:dataTable>
                 <p:contextMenu for="dtTable">
-                    <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil"  oncomplete="PF('wdlgDatos').show()"/>
+                    <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" actionListener="#{carteleraC.rellenar()}"  
+                                oncomplete="PF('wdlgDatos').show()"/>
                     <p:menuitem value="Eliminar" update="form:dtTable" icon="ui-icon-circle-close" actionListener="#{carteleraC.eliminar()}"/>
                 </p:contextMenu>
             </h:form>
@@ -82,7 +85,10 @@
                 <h:form>
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Pelicula"/>
-                        <p:autoComplete  value="#{carteleraC.select.IDPEL}" completeMethod="#{carteleraC.completeTextPelicula}" required="true" requiredMessage="Se necesita la pelicula"/>
+                        <p:selectOneMenu id="advanced" value="#{carteleraC.select.IDPEL}"  panelStyle="width:180px"
+                                         effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
+                            <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
+                        </p:selectOneMenu>
                         <p:outputLabel value="Hora"/>
                         <p:inputMask value="#{carteleraC.select.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
                         <p:outputLabel value="Fecha"   />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-07-17T16:33:03 -->
+<!-- 2019-07-17T16:57:22 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Empleado" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66519d71-4f27-4833-9a1d-c9b72e811f0c">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Cine"/>
@@ -43,67 +43,88 @@ FROM "VW_PELICULA" GO]]>
 	<field name="ESTPEL" class="java.lang.String"/>
 	<title>
 		<band height="84" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="7" width="801" height="48" forecolor="#5E5135" backcolor="#5E5135" uuid="945e9375-df88-42b6-a71b-1eb061e2a1bc"/>
+			</rectangle>
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="802" height="62" uuid="a080d2ca-6207-4d8e-87c9-d3b61fb495a9"/>
+				<reportElement style="Title" x="0" y="0" width="802" height="62" forecolor="#FFFFFF" uuid="a080d2ca-6207-4d8e-87c9-d3b61fb495a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="36"/>
+					<font fontName="SansSerif" size="31"/>
 				</textElement>
 				<text><![CDATA[Cine VG]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="1" y="62" width="799" height="22" uuid="0d849401-f944-4163-9df0-f69408a0618a"/>
 				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="14"/>
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Empleados]]></text>
+				<text><![CDATA[Reporte de Películas]]></text>
 			</staticText>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="29">
 			<staticText>
-				<reportElement x="50" y="0" width="50" height="20" uuid="8edd6722-4325-4244-8caf-58010f015f92"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="50" y="0" width="50" height="20" forecolor="#5E5135" uuid="8edd6722-4325-4244-8caf-58010f015f92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[CÓDIGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="20" uuid="5b6d2db0-02e4-4f95-a44a-01223c3c5cd1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="100" y="0" width="100" height="20" forecolor="#5E5135" uuid="5b6d2db0-02e4-4f95-a44a-01223c3c5cd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="100" height="20" uuid="ce833b78-9dd3-44de-87ac-a8d07e79f149"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="200" y="0" width="100" height="20" forecolor="#5E5135" uuid="ce833b78-9dd3-44de-87ac-a8d07e79f149"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[GÉNERO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="0" width="75" height="20" uuid="3938f127-6c93-4b7a-8134-301834eb0eec"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="300" y="0" width="75" height="20" forecolor="#5E5135" uuid="3938f127-6c93-4b7a-8134-301834eb0eec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[RESTRICCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="375" y="0" width="75" height="20" uuid="421ce5a8-c3b9-4aa2-94ff-5b8515f388ed"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="375" y="0" width="75" height="20" forecolor="#5E5135" uuid="421ce5a8-c3b9-4aa2-94ff-5b8515f388ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[LENGUAJE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="450" y="0" width="75" height="20" uuid="2b0cbd1b-c921-402a-b229-f55828add52b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="450" y="0" width="75" height="20" forecolor="#5E5135" uuid="2b0cbd1b-c921-402a-b229-f55828add52b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[DURACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="525" y="0" width="75" height="20" uuid="f4b152c5-3a73-4afb-9513-f2062a6ef465"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="525" y="0" width="75" height="20" forecolor="#5E5135" uuid="f4b152c5-3a73-4afb-9513-f2062a6ef465"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[HORA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="600" y="0" width="110" height="20" uuid="bf6206d8-b506-43ad-8358-844349f01f15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="600" y="0" width="110" height="20" forecolor="#5E5135" uuid="bf6206d8-b506-43ad-8358-844349f01f15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[FECHA DE ESTRENO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="710" y="0" width="59" height="20" uuid="da551020-9585-4d6f-a973-055af19e3fa5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="710" y="0" width="59" height="20" forecolor="#5E5135" uuid="da551020-9585-4d6f-a973-055af19e3fa5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[ESTADO]]></text>
 			</staticText>
 		</band>
@@ -112,46 +133,109 @@ FROM "VW_PELICULA" GO]]>
 		<band height="20">
 			<textField>
 				<reportElement x="50" y="0" width="50" height="20" uuid="5222c850-f18a-454b-99cf-28cd22b8d36f"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{IDPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="100" y="0" width="100" height="20" uuid="b42a984a-7a51-4561-9302-49b37963c27f"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NOMPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="0" width="100" height="20" uuid="ee1d0db3-181e-47f5-8b32-d277d0de2a89"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{GENPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="300" y="0" width="75" height="20" uuid="9982332a-bbdd-4b1d-8c5c-f7f79e302bb1"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{RESTPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="375" y="0" width="75" height="20" uuid="283a968b-267c-4e36-a82d-db6abddacd04"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{LENPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="450" y="0" width="75" height="20" uuid="4202c3a6-4925-4c95-a0f5-a657201d9ced"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DURPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="525" y="0" width="75" height="20" uuid="956f3424-4418-45ef-8aaa-1087edb931d8"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{HORPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="600" y="0" width="110" height="20" uuid="92fefe1d-ce8d-440d-8708-6e7aaa5ea8c7"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{FECPEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="710" y="0" width="60" height="20" uuid="0c75d00d-fb76-4ff4-9c07-5136b4832039"/>
+				<box>
+					<pen lineColor="#5E5135"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#5E5135"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ESTPEL}]]></textFieldExpression>
 			</textField>

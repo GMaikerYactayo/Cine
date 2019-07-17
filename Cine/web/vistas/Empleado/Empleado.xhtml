@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>EMPLEADO</title>
+    </h:head> 
+
+    <h:body>
+        <h:form>
+            <center>
+                <h1 style="color: #6699ff">REGISTROS DE EMPLEADOS</h1>
+            </center>
+        </h:form>
+
+
+        <!--REGISTRO DE EMPLEADOS-->
+        <center>
+            <h:form id="f_regEmpl"> 
+                <p:panelGrid id="pg_regEmpl" columns="4">
+
+                    <p:outputLabel for="nombre" value="NOMBRE(S) "/> 
+                    <p:inputText id="nombre" value="#{empleadoC.empleado.NOMEMP}" maxlength="50" style="text-transform: capitalize"
+                                 required="true" requiredMessage="Añadir Nombre obligatorio">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                    </p:inputText>  
+
+                    <p:outputLabel for="apellido" value="APELIDOS "/> 
+                    <p:inputText id="apellido" value="#{empleadoC.empleado.APEEMP}" maxlength="50" style="text-transform: capitalize"
+                                 required="true" requiredMessage="Añadir Apellido obligatorio">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel for="dni" value="DNI "/> 
+                    <p:inputText id="dni" value="#{empleadoC.empleado.DNIEMP}" maxlength="8" required="true" requiredMessage="Añadir DNI obligatorio">
+                        <p:keyFilter regEx="/[0-9]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="DIRECCIÓN "/> 
+                    <p:inputText value="#{empleadoC.empleado.DIREMP}" maxlength="150">
+                    </p:inputText>
+
+                    <p:outputLabel for="sexo" value="SEXO "/>
+                    <p:selectOneMenu id="sexo" value="#{empleadoC.empleado.SEXEMP}" required="true" style="width: 225px"
+                                     requiredMessage="SELECCIONAR TIPO DE EMPLEADO">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                        <f:selectItem itemLabel="FEMENINO" itemValue="F" />                      
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="tipo" value="TIPO:"/>
+                    <p:selectOneMenu id="tipo" value="#{empleadoC.empleado.TIPEMP}" required="true" style="width: 225px"
+                                     requiredMessage="SELECCIONAR TIPO DE EMPLEADO">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A" />
+                        <f:selectItem itemLabel="EMPLEADO" itemValue="E" />                      
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="UBIGEO "/> 
+                    <p:autoComplete forceSelection="true" value="#{empleadoC.empleado.nombreUbi}" completeMethod="#{ubigeoCon.completeTextUbi}" maxlength="150"/>
+
+
+                    <p:outputLabel value="USUARIO "/> 
+                    <p:inputText value="#{empleadoC.empleado.USUEMP}" maxlength="150"/>
+
+
+                    <p:outputLabel value="CONTRASEÑA "/> 
+                    <p:password value="#{empleadoC.empleado.PWDEMP}" maxlength="150"/>
+
+
+                    <p:commandButton value="GUARDAR" actionListener="#{empleadoC.registrar()}" update="pg_regEmpl :emple:listaP"
+                                      style="color: #ffffff; background-color: dodgerblue"/>
+                    <p:commandButton value="CANCELAR" style="color: #ffffff; background-color: #ff0033" 
+                                     process="@this" update="pg_regEmpl">
+                        <p:resetInput target="pg_regEmpl"/>
+                    </p:commandButton>
+                </p:panelGrid>
+            </h:form>
+        </center>
+
+        <!--LISTA DE EMPLEADOS-->
+        <p:growl showDetail="true" id="messages">
+            <p:autoUpdate/>
+        </p:growl>
+        
+        <h:form id="emple">                
+            <p:dataTable id="listaP" 
+                         value="#{empleadoC.listadoEmp}" 
+                         var="lista"  
+                         rows="10"
+                         paginator="true" 
+                         selection="#{empleadoC.select}" 
+                         selectionMode="single" 
+                         rowKey="#{lista.IDEMP}"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                <f:facet name="header">
+                    LISTA DE EMPLEADOS
+                </f:facet>
+
+                <p:column style="width: 5px">
+                    <p:rowToggler />
+                </p:column>
+
+                <p:column headerText="NOMBRE(S)" style="font-weight: bold; color: #ff0033" width="90">
+                    <h:outputText value="#{lista.NOMEMP}" style="color: black; font-weight: normal; text-transform: capitalize; font-family: cursive"/>
+                </p:column>   
+
+                <p:column headerText="APELLIDOS" style="font-weight: bold; color: #ff0033" width="90">
+                    <h:outputText value="#{lista.APEEMP}" style="color: black; font-weight: normal; text-transform: capitalize; font-family: cursive"/>
+                </p:column>  
+
+                <p:column headerText="DNI" style="font-weight: bold; color: #ff0033" width="45">
+                    <h:outputText value="#{lista.DNIEMP}" style="color: black; font-weight: normal; font-family: cursive"/>
+                </p:column>  
+
+                <p:column headerText="DIRECCIÓN" style="font-weight: bold; color: #ff0033" width="165">
+                    <h:outputText value="#{lista.DIREMP}" style="color: black; font-weight: normal; font-family: cursive"/>
+                </p:column>  
+
+                <p:column headerText="SEXO" style="font-weight: bold; color: #ff0033" width="20">
+                    <center>
+                        <h:outputText value="#{lista.SEXEMP}" style="color: black; font-weight: normal; font-family: cursive"/>
+                    </center>
+                </p:column>              
+
+                <p:column headerText="PROCEDENCIA" style="font-weight: bold; color: #ff0033" width="300">
+                    <h:outputText value="#{lista.nombreUbi}" style="color: black; font-weight: normal; font-family: cursive"/>
+                </p:column>   
+
+                <p:rowExpansion>
+                    <p:panelGrid columns="2" columnClasses="label, value" style="width:500px">
+                        <h:outputText value="TIPO DE USUARIO:"/>
+                        <h:outputText value="#{lista.TIPEMP} "/>
+                        <h:outputText value="USUARIO:"/>
+                        <h:outputText value="#{lista.USUEMP} "/>
+                        <h:outputText value="CONTRASEÑA:"/>
+                        <h:outputText value="#{lista.PWDEMP}"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+
+            <p:contextMenu for="listaP">
+                <p:menuitem value="MODIFICAR" icon="ui-icon-pencil" update=":modi" oncomplete="PF('wdlgDatos').show()"/>
+                <p:menuitem value="ELIMINAR" update="listaP" icon="ui-icon-trash" action="#{empleadoC.eliminar()}"/>
+            </p:contextMenu>
+        </h:form>
+
+
+        <!--FORMULARIO PARA MODIFICAR LOS DATOS DEL EMPLEADO-->
+        <p:dialog id="modi" header="MODIFICAR LOS DATOS DEL EMPLEADO:" modal="true" showEffect="fade" hideEffect="fade" resizable="false"  widgetVar="wdlgDatos">
+            <h:form >
+                <p:panelGrid columns="4">
+                    <p:outputLabel for="nombre" value="NOMBRE(S) "/> 
+                    <p:inputText id="nombre" value="#{empleadoC.select.NOMEMP}" maxlength="50" style="text-transform: capitalize"
+                                 required="true" requiredMessage="Añadir Nombre obligatorio">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                    </p:inputText>  
+
+                    <p:outputLabel for="apellido" value="APELIDOS "/> 
+                    <p:inputText id="apellido" value="#{empleadoC.select.APEEMP}" maxlength="50" style="text-transform: capitalize"
+                                 required="true" requiredMessage="Añadir Apellido obligatorio">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel for="dni" value="DNI "/> 
+                    <p:inputText id="dni" value="#{empleadoC.select.DNIEMP}" maxlength="8" required="true" requiredMessage="Añadir DNI obligatorio">
+                        <p:keyFilter regEx="/[0-9]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="DIRECCIÓN "/> 
+                    <p:inputText value="#{empleadoC.select.DIREMP}" maxlength="150"/>
+
+                    <p:outputLabel for="sexo" value="SEXO "/>
+                    <p:selectOneMenu id="sexo" value="#{empleadoC.select.SEXEMP}" required="true" style="width: 225px"
+                                     requiredMessage="SELECCIONAR TIPO DE EMPLEADO">
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                        <f:selectItem itemLabel="FEMENINO" itemValue="F" />                      
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="tipo" value="TIPO:"/>
+                    <p:selectOneMenu id="tipo" value="#{empleadoC.select.TIPEMP}" required="true" style="width: 225px"
+                                     requiredMessage="SELECCIONAR TIPO DE EMPLEADO">
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A" />
+                        <f:selectItem itemLabel="EMPLEADO" itemValue="E" />                      
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="UBIGEO "/> 
+                    <p:autoComplete value="#{empleadoC.select.nombreUbi}" completeMethod="#{ubigeoCon.completeTextUbi}" maxlength="150"/>
+
+                    <p:outputLabel value="USUARIO "/> 
+                    <p:inputText value="#{empleadoC.select.USUEMP}" maxlength="150"/>
+
+                    <p:outputLabel value="CONTRASEÑA "/> 
+                    <p:inputText type="password" value="#{empleadoC.select.PWDEMP}" maxlength="150"/>
+                    </p:panelGrid>
+
+                <p:commandButton value="GUARDAR CAMBIOS" actionListener="#{empleadoC.modificar()}" update=":emple:listaP" 
+                                 style="color: #ffffff; background-color: #6699ff" oncomplete="PF('wdlgDatos').hide();"/>             
+                <p:commandButton value="CANCELAR" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+</html>

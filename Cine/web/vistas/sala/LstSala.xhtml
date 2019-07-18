@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <title>Sala</title>
+    </h:head>
+    <h:body>
+        <p:growl autoUpdate="true" showDetail="true" id="messages"  />
+        <center>
+            <h:form>
+                <h:form id="formIns">
+                    <h1 style="margin-top:0">Registrar sala</h1>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="basic" value="Número de sala"/>
+                        <p:spinner id="basic" value="#{salaC.sala.NUMSAL}" />
+                        <p:outputLabel for="basi" value="Capacidad"/>
+                        <p:spinner id="basi" value="#{salaC.sala.CAPSAL}" />
+                    </p:panelGrid>
+                    <p:commandButton value="Registrar" actionListener="#{salaC.registrar()}" /> 
+                </h:form>
+
+            </h:form>
+
+            <p:spacer/>
+            <h:form id="form">
+                <p:dataTable value="#{salaC.listadoSal}" 
+                             var="lista" 
+                             id="dtTable" 
+                             selectionMode="single"
+                             selection="#{salaC.select}"
+                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" 
+                             rowKey="#{lista.IDSAL}"
+                             rows="8" 
+                             style="margin-bottom:20px">
+
+                    <p:autoUpdate />
+
+                    <p:column headerText="Capacidad">
+                        <h:outputText value="#{lista.CAPSAL}" />
+                    </p:column>
+                    <p:column headerText="Numero de sala" >
+                        <h:outputText value="#{lista.NUMSAL}" />
+                    </p:column>
+                    
+
+                    <f:facet name="footer">
+                        EN TOTAL HAY #{fn:length(salaC.listadoSal)} REGISTROS.
+                    </f:facet>
+                </p:dataTable>
+                <p:contextMenu for="dtTable">
+                    <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil"   
+                                oncomplete="PF('wdlgDatos').show()"/>
+                    <p:menuitem value="Eliminar" update="form:dtTable" icon="ui-icon-circle-close" actionListener="#{salaC.eliminar()}"/>
+                </p:contextMenu>
+            </h:form>
+            <p:dialog showEffect="explode" modal="true" hideEffect="explode"
+                      id="dlgDatos" widgetVar="wdlgDatos" >
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="basic" value="Número de sala"/>
+                        <p:spinner id="basic" value="#{salaC.select.NUMSAL}" />
+                        <p:outputLabel for="basi" value="Capasidad"/>
+                        <p:spinner id="basi" value="#{salaC.select.CAPSAL}" />
+                    </p:panelGrid>
+
+                    <p:commandButton value="Actualizar" actionListener="#{salaC.modificar()}"
+                                     update=":form:dtTable" oncomplete="PF('wdlgDatos').hide();">           
+                        <p:tooltip trackMouse="true"/>
+                    </p:commandButton>
+                    <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+                </h:form>
+            </p:dialog>
+        </center>
+    </h:body>
+</html>

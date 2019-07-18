@@ -1,17 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <h:head>
-        <title>Facelet Title</title>
+        <title>CINEVG</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
+    
     <h:body>
-        BIENVENIDOS A CINEVG
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <h:form>
+            <p:breadCrumb>
+                <p:menuitem value="DASHBOARD" url="faces/vistas/Grafico/GraficoCine.xhtml" />
+                <p:menuitem value="VENTA" url="faces/vistas/Venta/Venta.xhtml" />
+                <p:menuitem value="CARTELERA" url="faces/vistas/Cartelara/LstCartelera.xhtml" />                
+                <p:menuitem value="EMPLEADO" url="faces/vistas/Empleado/Empleado.xhtml" />
+                <p:menuitem value="PELICULA" url="faces/vistas/Pelicula/LstPelicula.xhtml" />
+                <p:menuitem value="CLIENTE" url="faces/vistas/cliente/Cliente.xhtml" />
+                <p:menuitem value="SALAS" url="faces/vistas/sala/LstSala.xhtml" />
+            </p:breadCrumb>
+        </h:form>
+        <div class="main-panel">
+            <ui:insert name="menu"/>
+        </div>
     </h:body>
 </html>
 

@@ -1,4 +1,4 @@
-package control;
+package controlador;
 
 import dao.VenDetImpl;
 import dao.VentaImpl;

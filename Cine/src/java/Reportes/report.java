@@ -12,6 +12,8 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
+//REPORTE
+
 public class report extends Conexion {
 
     public void exportarPDF_PELICULA(Map parameters) throws JRException, IOException, Exception {

@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Personal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>   
+    <h:body>
+        
+                <p:growl id="growl" showDetail="true" sticky="true">
+                    <p:autoUpdate/>
+                </p:growl>
+                <center>
+                <h:form id="agregarCliente">                   
+                        <div class="ui-fluid">
+                            <h1 style="margin-top:0">Registrar Cliente</h1>
+                            <p:panelGrid columns="4">
+                                <h:outputLabel for="nombre" value="NOMBRE"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="nombre" value="#{ClienteC.persona.NOMCLI}" 
+                                                 placeholder="INGRESAR NOMBRES" 
+                                                 required="true"
+                                                 requiredMessage="SE REQUIERE NOMBRE">
+                                        <p:keyFilter regEx="/[a-z ]/i"/> 
+                                    </p:inputText>
+                                </h:panelGroup>
+                                <h:outputLabel for="apellido" value="APELLIDO"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="apellido" value="#{ClienteC.persona.APECLI}" 
+                                                 placeholder="INGRESAR APELLIDOS" 
+                                                 required="true"
+                                                 requiredMessage="SE REQUIERE APELLIDO">
+                                        <p:keyFilter regEx="/[a-z ]/i"/> 
+                                    </p:inputText>
+                                </h:panelGroup>
+
+                                <h:outputLabel for="sexo" value="SEXO"/>
+                                <p:selectOneRadio id="sexo" value="#{ClienteC.persona.SEXCLI}" 
+                                                  required="true" 
+                                                  requiredMessage="SE REQUIERE EL SEXO">
+                                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                                </p:selectOneRadio>
+                                <h:outputLabel value="FECHA DE NACIMIENTO"/>
+                                <p:calendar value="#{ClienteC.persona.NACCLI}" 
+                                            locale="es" 
+                                            navigator="true"
+                                            pattern="dd-MMMM-yyyy"
+                                            yearRange="-100:+0"
+                                            readonlyInput="true"/>
+                            </p:panelGrid>
+                            <br/>
+                            <p:commandButton value="REGISTRAR" actionListener="#{ClienteC.registrar()}" update=":agregarCliente :ListCli:cliente :growl" />
+                        </div>
+                </h:form>
+                <br/>
+                <h:form id="estado">
+                    <p:commandButton value="ACTIVOS" 
+                                     id="btnActivo"
+                                     actionListener="#{ClienteC.listar('A')}" 
+                                     update=":estado :ListCli:cliente"
+                                     oncomplete="PF('ListaTable').clearFilters()"/>
+
+                    <p:commandButton value="INACTIVOS"
+                                     id="btnInactivo"
+                                     actionListener="#{ClienteC.listar('I')}" 
+                                     update=":estado :ListCli:cliente"
+                                     oncomplete="PF('ListaTable').clearFilters()"/>
+                    <p:blockUI block="estado" trigger="btnInactivo btnActivo" />
+                </h:form>
+
+                <h:form id="ListCli">
+                    <p:dataTable id="cliente"
+                                 value="#{ClienteC.listper}"
+                                 widgetVar="ListaTable" 
+                                 var="cliente"
+                                 rowKey="#{cliente.IDCLI}"
+                                 filteredValue="#{ClienteC.listper}"
+                                 selection="#{ClienteC.personaEdit}"
+                                 selectionMode="single"
+                                 paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 editable = "true"
+                                 rows = "10"
+                                 paginator="true"
+                                 style="margin-top:20px" 
+                                 reflow="true">
+                        <f:facet name="header">
+                            LISTA DE CLIENTES
+                        </f:facet>
+                        <f:facet name="header">
+                            <div style="float:right;padding-top: 5px;">
+                                <h:commandLink value="REPORTE" actionListener="#{ClienteC.REPORTECLIENTE(idcli)}">
+                                    <p:graphicImage url="../../recursos/images/favicon.png" width="35" title="Descargar Reporte"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="N°" width="50">
+                            <center>
+                                <h:outputText value="#{cliente.IDCLI}"/>
+                            </center>
+                        </p:column>
+
+                        <p:column headerText="NOMBRE COMPLETO" width="350">
+                            <h:outputText value="#{cliente.NOMCLI} #{cliente.APECLI}"/>
+                        </p:column>
+
+                        <p:column headerText="SEXO" width="150">
+                            <center>
+                                <h:outputText value="#{cliente.SEXCLI}">
+                                    <f:converter converterId="convertir"/>
+                                </h:outputText>
+                            </center>
+                        </p:column>
+
+                        <p:column headerText="FECHA DE NACIMIENTO" width="150">
+                            <center>
+                                <h:outputText value="#{cliente.NACCLI}">
+                                    <f:convertDateTime pattern="dd / MMMM /yyyy" locale="es"/>
+                                </h:outputText>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+
+
+                    <p:contextMenu for="cliente">
+                        <p:menuitem value="EDITAR" 
+                                    update="dlgCliente" 
+                                    oncomplete="PF('wdlgCliente').show()"/>
+
+                        <p:menuitem oncomplete="PF('ListaTable').clearFilters()"
+                                    value="INHABLITAR" 
+                                    update="cliente"
+                                    actionListener="#{ClienteC.invilitar(cliente)}"/>
+
+                        <p:menuitem oncomplete="PF('ListaTable').clearFilters()"
+                                    value="HABLITAR" 
+                                    update="cliente"
+                                    actionListener="#{ClienteC.habilitar(cliente)}"/>
+                    </p:contextMenu>
+
+                </h:form>
+
+                <p:dialog id="dlgCliente" 
+                          widgetVar="wdlgCliente" 
+                          closable="false" 
+                          modal="true" 
+                          header="EDITAR CLIENTE"
+                          showEffect="blind" 
+                          resizable="false" 
+                          draggable="false">
+                    <h:form>
+                        <p:panelGrid columns="4">
+                            <h:outputLabel for="nombre" value="NOMBRE"/>
+                            <p:inputText id="nombre" value="#{ClienteC.personaEdit.NOMCLI}" 
+                                         placeholder="INGRESAR NOMBRES" 
+                                         required="true"
+                                         requiredMessage="SE REQUIERE NOMBRE"/>
+
+                            <h:outputLabel for="apellido" value="APELLIDO"/>
+                            <p:inputText id="apellido" value="#{ClienteC.personaEdit.APECLI}" 
+                                         placeholder="INGRESAR APELLIDOS" 
+                                         required="true"
+                                         requiredMessage="SE REQUIERE APELLIDO"/>
+
+                            <h:outputLabel for="sexo" value="SEXO"/>
+                            <p:selectOneRadio id="sexo" value="#{ClienteC.personaEdit.SEXCLI}" 
+                                              required="true" 
+                                              requiredMessage="SE REQUIERE EL SEXO">
+                                <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                                <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                            </p:selectOneRadio>
+
+                            <h:outputLabel value="FECHA DE NACIMIENTO"/>
+                            <p:calendar value="#{ClienteC.personaEdit.NACCLI}" 
+                                        locale="es" 
+                                        navigator="true"
+                                        pattern="yyyy-MMM-dd"
+                                        yearRange="-100:+0"/>
+                        </p:panelGrid>
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                                <p:commandButton value="Actualizar" actionListener="#{ClienteC.modificar()}"
+                                                 update=":ListCli :growl" oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgCliente').hide();">
+                                    <p:tooltip trackMouse="true"/>
+                                </p:commandButton>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                                <p:commandButton value="Cancelar" 
+                                                 immediate="true" 
+                                                 update=":ListCli:cliente dlgCliente" 
+                                                 process="@this" 
+                                                 oncomplete="PF('wdlgCliente').hide();">
+                                    <p:resetInput target="dlgCliente" />
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+                </center>          
+    </h:body>
+    <script type="text/javascript">
+        PrimeFaces.locales['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Sólo hora',
+            timeText: 'Tiempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Fecha actual',
+            ampm: false,
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día',
+            allDayText: 'Todo el día'
+        };
+    </script>
+</html>

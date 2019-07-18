@@ -11,8 +11,10 @@ public class VenDet {
     
     private String NOMPEL;
     private int NUMSAL;
+    private int IDPEL;
     private String INDEX;
     private String PRECCANT;
+    private String HORPELI;
     
 
     public VenDet() {
@@ -27,6 +29,8 @@ public class VenDet {
         this.ESTDETVEN = vd.ESTDETVEN;
         this.NOMPEL = vd.NOMPEL;
         this.NUMSAL = vd.NUMSAL;
+        this.IDPEL = vd.IDPEL;
+        this.HORPELI = vd.HORPELI;
     }
     
     
@@ -108,6 +112,22 @@ public class VenDet {
 
     public void setPRECCANT(String PRECCANT) {
         this.PRECCANT = PRECCANT;
+    }
+
+    public int getIDPEL() {
+        return IDPEL;
+    }
+
+    public void setIDPEL(int IDPEL) {
+        this.IDPEL = IDPEL;
+    }
+
+    public String getHORPELI() {
+        return HORPELI;
+    }
+
+    public void setHORPELI(String HORPELI) {
+        this.HORPELI = HORPELI;
     }
     
 }

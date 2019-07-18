@@ -8,171 +8,161 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body>
-        <ui:composition template="../Menu/Menu.xhtml">
-            <ui:define name="menu">
-                <p:growl>
-                    <p:autoUpdate/>
-                </p:growl>
-                <h:form id="f_insven">
-                    <h1 style="margin-top:0">Registrar venta</h1>
-                    <p:panelGrid columns="3">
-                        <p:outputLabel value="Cliente"/>
-                        <p:selectOneMenu value="#{ventaC.modelo.IDCLI}" filter="true" required="true">
-                            <p:ajax event="change" update=":f_insvendet" ignoreAutoUpdate="true" listener="#{ventaC.activar()}"/>
-                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                            <f:selectItems value="#{ClienteC.listper}" var="client" itemLabel="#{client.APECLI}, #{client.NOMCLI}"
-                                           itemValue="#{client.IDCLI}"/>
-                        </p:selectOneMenu>
-                        <p:commandButton value="Nuevo cliente" onclick="PF('dlg_regclien').show();" /> 
-                    </p:panelGrid>
-                    <p:commandButton value="Registrar" actionListener="#{carteleraC.registrar()}" /> 
-                </h:form>
+    <ui:composition template="../Menu/Menu.xhtml">
+        <ui:define name="menu">
+            <p:growl>
+                <p:autoUpdate/>
+            </p:growl>
+            <h:form id="f_insven">
+                <h1 style="margin-top:0">Registrar venta</h1>
+                <p:panelGrid columns="3">
+                    <p:outputLabel value="Cliente"/>
+                    <p:selectOneMenu value="#{ventaC.modelo.IDCLI}" filter="true" required="true" id="som">
+                        <p:ajax event="change" update=":f_insvendet :f_insvendet:btn_addItem :f_btn:btn_btn" 
+                                ignoreAutoUpdate="true" listener="#{ventaC.activar()}"/>
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{-1}" />
+                        <f:selectItems value="#{ClienteC.listadoCli}" var="client" itemLabel="#{client.APECLI}, #{client.NOMCLI}"
+                                       itemValue="#{client.IDCLI}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Nuevo cliente" onclick="PF('dlg_regclien').show();" /> 
+                </p:panelGrid>
+            </h:form>
 
-                <h:form id="f_insvendet">
-                    <h2>Agregar Item</h2>
+
+            <h:form id="f_insvendet">
+                <p:panelGrid id="pg_insvendet" columns="6" rendered="#{ventaC.activo}">
+                    <p:outputLabel value="Pelicula:"/>
+                    <p:selectOneMenu value="#{venDetC.modelo.NOMPEL}" filter="true" required="true">
+                        <p:ajax event="change" update="som_horario" ignoreAutoUpdate="true" listener="#{venDetC.listarH()}"/>
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                        <f:selectItems value="#{venDetC.listPeli}" var="peli" itemLabel="#{peli.NOMPEL}"
+                                       itemValue="#{peli.IDPEL}-#{peli.NOMPEL}_#{peli.PRECCANT}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="# Sala:"/>
+                    <p:selectOneMenu value="#{venDetC.modelo.IDSAL}" filter="true" required="true">
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                        <f:selectItems value="#{salaC.listadoSal}" var="sala" itemLabel="#{sala.NUMSAL}"
+                                       itemValue="#{sala.IDSAL}-#{sala.NUMSAL}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Horario:"/>
+                    <p:selectOneMenu id="som_horario" value="#{venDetC.modelo.HORPELI}" filter="true" required="true">
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                        <f:selectItems value="#{venDetC.listHora}" var="horario" itemLabel="#{horario.HORCAR}"
+                                       itemValue="#{horario.IDCAR}-#{horario.HORCAR}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Cant. Entradas"/>
+                    <p:inputText id="cantEntr" value="#{venDetC.modelo.CATVEN}" maxlength="2" required="true"
+                                 requiredMessage="Indicar cantidad de entradas">
+                        <p:keyFilter mask="num"/>
+                        <p:tooltip value="Entradas disponibles 10" for="cantEntr" position="bottom"/>
+                    </p:inputText>
+                    <p:outputLabel id="id_preUnit" value="#{venDetC.modelo.PRECCANT}"/>
+                </p:panelGrid>
+                <p:commandButton id="btn_addItem" value="Agregar Item" update=":form:dtTable" 
+                                 actionListener="#{venDetC.newItem()}" rendered="#{ventaC.activo}" /> 
+            </h:form>
+
+            <p:spacer/>
+            <h:form id="form">
+                <p:dataTable value="#{venDetC.listadoVista}" 
+                             var="l_vendeta" 
+                             id="dtTable" 
+                             selectionMode="single"
+                             selection="#{venDetC.select}"
+                             paginator="true" rowIndexVar="index"
+                             rowKey="#{l_vendeta.IDDETVEN}">
+                    <p:column headerText="Pelicula">
+                        <h:outputText value="#{l_vendeta.NOMPEL}" />
+                    </p:column>
+                    <p:column headerText="Sala">
+                        <h:outputText value="#{l_vendeta.NUMSAL}" />
+                    </p:column>
+                    <p:column headerText="Entradas" >
+                        <h:outputText value="#{l_vendeta.CATVEN}" />
+                    </p:column>
+                    <p:column headerText="Precio" >
+                        <h:outputText value="#{l_vendeta.PRECCANT}" />
+                    </p:column>
+                </p:dataTable>
+                <p:contextMenu for="dtTable">
+                    <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" actionListener="#{venDetC.tenerItem()}"
+                                oncomplete="PF('wdlgDatos').show()"/>
+                    <p:menuitem value="Eliminar" update=":form" icon="ui-icon-circle-close" action="#{venDetC.deleteItem()}"/>
+                </p:contextMenu>
+            </h:form>
+
+            <h:form id="f_btn">
+                <p:commandButton id="btn_btn" disabled="#{!ventaC.activo}" update="@all"
+                                 value="Registrar compra" actionListener="#{ventaC.registrar()}"></p:commandButton>
+            </h:form>
+
+            <p:dialog id="dlgDatos" widgetVar="wdlgDatos" >
+                <h:form>
                     <p:panelGrid id="pg_insvendet" columns="6" rendered="#{ventaC.activo}">
                         <p:outputLabel value="Pelicula:"/>
-                        <p:selectOneMenu value="#{venDetC.modelo.NOMPEL}" filter="true" required="true">
-                            <p:ajax event="change" update="id_preUnit" ignoreAutoUpdate="true"/>
-                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                            <f:selectItems value="#{carteleraC.listadoCar}" var="peli" itemLabel="#{peli.NOMPEL}"
-                                           itemValue="#{peli.NOMPEL}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel value="#{venDetC.select.NOMPEL}"/>
                         <p:outputLabel value="# Sala:"/>
-                        <p:selectOneMenu value="#{venDetC.modelo.NUMSAL}" filter="true" required="true">
+                        <p:selectOneMenu value="#{venDetC.select.IDSAL}" filter="true" required="true">
                             <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
                             <f:selectItems value="#{salaC.listadoSal}" var="sala" itemLabel="#{sala.NUMSAL}"
                                            itemValue="#{sala.NUMSAL}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Horario:"/>
-                        <p:selectOneMenu value="nada" filter="true" required="true">
+                        <p:selectOneMenu id="som_horario" value="#{venDetC.select.HORPELI}" filter="true" required="true">
                             <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                            <f:selectItems value="#{carteleraC.listadoCar}" var="horario" itemLabel="#{horario.HORCAR}"
-                                           itemValue="#{sala.NUMSAL}"/>
+                            <f:selectItems value="#{venDetC.listHora}" var="horario" itemLabel="#{horario.HORCAR}"
+                                           itemValue="#{horario.HORCAR}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Cant. Entradas"/>
-                        <p:inputText id="cantEntr" value="#{venDetC.modelo.CATVEN}" maxlength="2" required="true" 
+                        <p:inputText id="cantEntr" value="#{venDetC.select.CATVEN}" maxlength="2" required="true" 
                                      requiredMessage="Indicar cantidad de entradas">
                             <p:keyFilter mask="num"/>
                             <p:tooltip value="Entradas disponibles 10" for="cantEntr" position="bottom"/>
                         </p:inputText>
-                        <p:outputLabel id="id_preUnit" value="#{venDetC.modelo.PRECCANT}"/>
+                        <p:outputLabel id="id_preUnit" value="#{venDetC.select.PRECCANT}"/>
                     </p:panelGrid>
-                    <p:commandButton value="Agregar Item" update=":form:dtTable" actionListener="#{venDetC.newItem()}" /> 
+                    <p:commandButton value="Modificar Item" update="" actionListener="#{venDetC.ediItem()}" /> 
                 </h:form>
+            </p:dialog>
 
-                <p:spacer/>
-                <h:form id="form">
-                    <p:dataTable value="#{venDetC.listadoVista}" 
-                                 var="l_vendeta" 
-                                 id="dtTable" 
-                                 selectionMode="single"
-                                 selection="#{venDetC.select}"
-                                 paginator="true" rowIndexVar="index"
-                                 rowKey="#{l_vendeta.IDDETVEN}">
-                        <p:column headerText="Pelicula">
-                            <h:outputText value="#{l_vendeta.NOMPEL}" />
-                        </p:column>
-                        <p:column headerText="Sala">
-                            <h:outputText value="#{l_vendeta.setINDEX(INDEX)}" />
-                        </p:column>
-                        <p:column headerText="Entradas" >
-                            <h:outputText value="#{l_vendeta.CATVEN}" />
-                        </p:column>
-                        <p:column headerText="Precio" >
-                            <h:outputText value="#{l_vendeta.PRECCANT}" />
-                        </p:column>
-                    </p:dataTable>
-                    <p:contextMenu for="dtTable">
-                        <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil"  oncomplete="PF('wdlgDatos').show()"/>
-                        <p:menuitem value="Eliminar" update=":form" icon="ui-icon-circle-close" action="#{venDetC.deleteItem()}"/>
-                    </p:contextMenu>
+            <p:dialog id="dlg_regclien" widgetVar="dlg_regclien" >
+                <h:form id="f_regEmpl"> 
+                        <p:panelGrid id="pg_regEmpl" columns="4">
 
-                </h:form>
-                <p:dialog id="dlgDatos" widgetVar="wdlgDatos" >
-                    <h:form>
-                        <p:panelGrid columns="6">
-                            <p:outputLabel value="Pelicula:"/>
-                            <p:selectOneMenu value="#{venDetC.modelo.NOMPEL}" filter="true" required="true">
-                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                                <f:selectItems value="#{carteleraC.listadoCar}" var="peli" itemLabel="#{peli.NOMPEL}"
-                                               itemValue="#{peli.NOMPEL}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="# Sala:"/>
-                            <p:selectOneMenu value="#{venDetC.modelo.NUMSAL}" filter="true" required="true">
-                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                                <f:selectItems value="#{salaC.listadoSal}" var="sala" itemLabel="#{sala.NUMSAL}"
-                                               itemValue="#{sala.NUMSAL}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Horario:"/>
-                            <p:selectOneMenu value="nada" filter="true" required="true">
-                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                                <f:selectItems value="#{carteleraC.listadoCar}" var="horario" itemLabel="#{horario.HORCAR}"
-                                               itemValue="#{sala.NUMSAL}"/>
-                            </p:selectOneMenu>
+                            <p:outputLabel for="nombre" value="NOMBRE(S) "/> 
+                            <p:inputText id="nombre" value="#{ClienteC.persona.NOMCLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Nombre obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                            </p:inputText>  
 
-                            <p:outputLabel value="Cant. Entradas"/>
-                            <p:inputText id="cantEntr" value="#{venDetC.modelo.CATVEN}" maxlength="2" required="true" 
-                                         requiredMessage="Indicar cantidad de entradas">
-                                <p:keyFilter mask="num"/>
-                                <p:tooltip value="Entradas disponibles 10" for="cantEntr" position="bottom"/>
+                            <p:outputLabel for="apellido" value="APELIDOS "/> 
+                            <p:inputText id="apellido" value="#{ClienteC.persona.APECLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Apellido obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
                             </p:inputText>
+
+                            <p:outputLabel value="FECHA N. "/> 
+                            <p:inputText value="#{ClienteC.persona.NACCLI}" maxlength="150">
+                            </p:inputText>
+
+                            <p:outputLabel for="sexo" value="SEXO "/>
+                            <p:selectOneMenu id="sexo" value="#{ClienteC.persona.SEXCLI}" required="true" style="width: 225px"
+                                             requiredMessage="SELECCIONAR TIPO DE CLIENTE">
+                                <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                                <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                                <f:selectItem itemLabel="FEMENINO" itemValue="F" />                      
+                            </p:selectOneMenu> 
                         </p:panelGrid>
-                        <p:commandButton value="Modificar Item" update=":form:dtTable" actionListener="#{venDetC.newItem()}" /> 
+                    <p:commandButton value="GUARDAR" actionListener="#{ClienteC.registrar()}" update="pg_regEmpl :f_insven:som"
+                                         style="color: #ffffff; background-color: dodgerblue"/>
+                        <p:commandButton value="CANCELAR" style="color: #ffffff; background-color: #ff0033" 
+                                         process="@this" update="pg_regEmpl">
+                            <p:resetInput target="pg_regEmpl"/>
+                        </p:commandButton>
                     </h:form>
-                </p:dialog>
-
-                <p:dialog id="dlg_regclien" widgetVar="dlg_regclien" >
-                    <h:form id="f_regclien">
-                        <p:panelGrid columns="4"
-                                     columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" 
-                                     layout="grid" 
-                                     styleClass="ui-panelgrid-blank ui-fluid">
-                            <h:outputLabel for="nombre" value="NOMBRE"/>
-                            <h:panelGroup styleClass="md-inputfield">
-                                <p:inputText id="nombre" value="#{ClienteC.persona.NOMCLI}" 
-                                             placeholder="INGRESAR NOMBRES" 
-                                             required="true"
-                                             requiredMessage="SE REQUIERE NOMBRE">
-                                    <p:keyFilter regEx="/[a-z ]/i"/> 
-                                </p:inputText>
-                            </h:panelGroup>
-
-                            <h:outputLabel for="apellido" value="APELLIDO"/>
-                            <h:panelGroup styleClass="md-inputfield">
-                                <p:inputText id="apellido" value="#{ClienteC.persona.APECLI}" 
-                                             placeholder="INGRESAR APELLIDOS" 
-                                             required="true"
-                                             requiredMessage="SE REQUIERE APELLIDO">
-                                    <p:keyFilter regEx="/[a-z ]/i"/> 
-                                </p:inputText>
-                            </h:panelGroup>
-
-                            <h:outputLabel for="sexo" value="SEXO"/>
-                            <p:selectOneRadio id="sexo" value="#{ClienteC.persona.SEXCLI}" 
-                                              required="true" 
-                                              requiredMessage="SE REQUIERE EL SEXO">
-                                <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
-                                <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
-                            </p:selectOneRadio>
-
-                            <h:outputLabel value="FECHA DE NACIMIENTO"/>
-                            <p:calendar value="#{ClienteC.persona.NACCLI}" 
-                                        locale="es" 
-                                        navigator="true"
-                                        pattern="dd-MMMM-yyyy"
-                                        yearRange="-18:+0"
-                                        readonlyInput="true"/>
-                        </p:panelGrid>
-                        <br/>
-                        <p:commandButton value="REGISTRAR" 
-                                         actionListener="#{ClienteC.registrar()}" 
-                                         update="@form" />
-                    </h:form>
-                </p:dialog>
-            </ui:define>
-        </ui:composition>
-    </h:body>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
 </html>

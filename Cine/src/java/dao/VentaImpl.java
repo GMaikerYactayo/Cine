@@ -16,7 +16,7 @@ public class VentaImpl extends Conexion implements ICRUD<Venta> {
         String sql = "insert into VENTA (TOTVEN,IDCLI,IDEMP,ESTVEN) values (?,?,?,?)";
         try {
             PreparedStatement ps = this.getCn().prepareStatement(sql);
-            ps.setString(1, venta.getTOTVEN());
+            ps.setString(1, "0");
             ps.setInt(2, venta.getIDCLI());
             ps.setString(3, venta.getIDEMP());
             ps.setString(4, "A");
@@ -91,6 +91,25 @@ public class VentaImpl extends Conexion implements ICRUD<Venta> {
             this.Cerrar();
         }
         return listado;
+    }
+    
+    public String obtener() throws Exception {
+        String ven ="";
+        try {
+            this.conectar();
+            String sql = "select top 1 IDVEN from VENTA where ESTVEN='A' order by IDVEN DESC";
+            Statement st = this.getCn().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                ven = rs.getString("IDVEN");
+            }
+            rs.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
+        return ven;
     }
 
 }

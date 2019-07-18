@@ -1,4 +1,4 @@
-package control;
+package controlador;
 
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -6,6 +6,7 @@ import java.io.Serializable;
 import dao.VentaImpl;
 import java.util.ArrayList;
 import java.util.List;
+import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import modelo.Venta;
@@ -26,10 +27,23 @@ public class VentaC implements Serializable {
     }
 
     public void registrar() throws Exception {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ValueExpression vex = context.getApplication().getExpressionFactory().createValueExpression(context.getELContext(), "#{venDetC}", VenDetC.class);
+            VenDetC bean = (VenDetC) vex.getValue(context.getELContext());
         try {
+            modelo.setIDEMP("2");
             dao.regitrar(modelo);
+            
+            
+            bean.enviar();
+            bean.limpiarlist();
+            bean.limpiar();
+            limpiar();
+            activo = false;
+            
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", "Registro Exitoso."));
+            
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error del Sistema", "Estamos trabajando en ello."));
@@ -63,10 +77,8 @@ public class VentaC implements Serializable {
 
     public void limpiar() throws Exception {
         try {
-            dao = new VentaImpl();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", "Registro Exitoso."));
-        } catch (Exception e) {
+            modelo = new Venta();
+            } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error del Sistema", "Estamos trabajando en ello."));
             throw e;
@@ -86,7 +98,8 @@ public class VentaC implements Serializable {
     }
 
     public void activar() {
-        if (modelo.getIDCLI() > 0) {
+        System.out.println(modelo.getIDCLI());
+        if (modelo.getIDCLI() > 0 ) {
             activo = true;
         } else {
             activo = false;

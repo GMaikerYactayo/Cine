@@ -1,0 +1,44 @@
+.ui-growl{
+    position: fixed;
+    top: 10%;
+}
+
+#mydiv {
+    position:absolute;
+    top: 17%;
+    left: 35.5%;
+    width: 400px;
+    height: 100px;
+}
+
+.input-field input:focus + label {
+    color: #2E9AFE !important;
+}
+.row .input-field input:focus {
+    border-bottom: 1px solid #254E89 !important;
+    box-shadow: 0 1px 0 0 #254E89 !important
+}
+
+
+
+
+
+
+.g-info {
+    background-color: #092B52;
+}
+.g-warn {
+    background-color: #FFE401;
+}
+.g-error {
+    background-color: #FF012B;
+}
+.g-fatal {
+    background-color: black;
+}
+
+
+
+
+
+

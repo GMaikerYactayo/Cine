@@ -1,142 +1,97 @@
 package controlador;
 
-import Reportes.report;
 import dao.ClienteImpl;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import modelo.Cliente;
 
-/**
- *
- * @author Ctorres
- */
 @Named(value = "ClienteC")
 @SessionScoped
 public class ClienteC implements Serializable {
 
-    Cliente persona = new Cliente();
-    Cliente personaEdit = new Cliente();
-    ClienteImpl dao;
-    List<Cliente> listper;
-    private boolean bt;
+    private Cliente persona = new Cliente();
+    private Cliente personaEdit = new Cliente();
+    private ClienteImpl dao;
+    private List<Cliente> listadoCli;
+    private List<Cliente> filterCli;
 
     @PostConstruct
-    public void inicio() {
+    public void init() {
         try {
-            listar("A");
+            listar();
+        } catch (Exception e) {
+            System.out.println("error init Apoderado " + e.getMessage());
+        }
+    }
+
+    public void listar() throws Exception {
+       ClienteImpl dao;
+        try {
+            dao = new ClienteImpl();
+            listadoCli = dao.listar();
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public void registrar() {
-        dao = new ClienteImpl();
-        try {
-            dao.regitrar(persona);
-            listar("A");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "REGISTRO COMPLETO", null));
-            limpiar();
-        } catch (Exception e) {
-        }
-    }
-
-    public void modificar() {
-        dao = new ClienteImpl();
-        try {
-            dao.modificar(personaEdit);
-            listar("A");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "MODIFICACION COMPLETA", null));
-        } catch (Exception e) {
-            System.out.println("Error controlador: " + e);
-        }
-    }
-
-    public void listar(String estado) {
-        dao = new ClienteImpl();
-        try {
-            listper = dao.listarcli(estado);
-        } catch (Exception e) {
-            System.out.println("Erroe: " + e);
-        }
-    }
-
-    public void habilitar(Cliente cli)throws Exception{
-        dao = new ClienteImpl();
-        try {
-            dao.eliminar(cli);
-            listar("I");
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "HABILITACION COMPLETA", null));
-        } catch (Exception e) {
-        }
-    }
-    
-    public void invilitar(Cliente cli) throws Exception{
-         dao = new ClienteImpl();
-        try {
-            dao.eliminar(cli);
-            listar("A");
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "INAVILITACION COMPLETA", null));
-        } catch (Exception e) {
-        }
-    }
-//      public void REPORTECLIENTE(String idcli) throws Exception {
-//        report reportCLIENTE = new report();
-//        try {
-//            Map<String, Object> parameters = new HashMap(); // Libro de parametros
-//            parameters.put(null, idcli); //Insertamos un parametro
-//            reportCLIENTE.exportarCLIENTE(parameters); //Pido exportar Reporte con los parametros
-////            report.exportarPDF2(parameters);
-//        } catch (Exception e) {
-//            throw e;
-//        }
-//    }
-    
-     public void REPORTE_PDF_CLIENTE(String cliente) throws Exception {
-        report reportCLi = new report();
-        try {
-            Map<String, Object> parameters = new HashMap(); // Libro de parametros
-            parameters.put(null, cliente); //Insertamos un parametro
-            reportCLi.exportarPDF_Cliente(parameters);//Pido exportar Reporte con los parametros
-//            report.exportarPDF2(parameters);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
     public void limpiar() {
         persona = new Cliente();
+
     }
 
+    public void registrar() throws Exception {
+
+        try {
+            dao = new ClienteImpl();            
+            dao.regitrar(persona);
+            limpiar();
+            listar();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro", "Completado"));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void modificar() throws Exception {
+
+        try {
+            dao = new ClienteImpl();
+            dao.modificar(personaEdit);
+            listar();
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro", "Modificado"));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void eliminar() throws Exception {
+        try {
+            dao = new ClienteImpl();
+            dao.eliminar(personaEdit);
+            listar();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "ELIMINADO", "Eliminado"));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    
+
+    //CÓDIGO GENEREDO
     public Cliente getPersona() {
         return persona;
     }
 
     public void setPersona(Cliente persona) {
         this.persona = persona;
-    }
-
-    public ClienteImpl getDao() {
-        return dao;
-    }
-
-    public void setDao(ClienteImpl dao) {
-        this.dao = dao;
-    }
-
-    public List<Cliente> getListper() {
-        return listper;
-    }
-
-    public void setListper(List<Cliente> listper) {
-        this.listper = listper;
     }
 
     public Cliente getPersonaEdit() {
@@ -147,12 +102,27 @@ public class ClienteC implements Serializable {
         this.personaEdit = personaEdit;
     }
 
-    public boolean isBt() {
-        return bt;
+    public ClienteImpl getDao() {
+        return dao;
     }
 
-    public void setBt(boolean bt) {
-        this.bt = bt;
+    public void setDao(ClienteImpl dao) {
+        this.dao = dao;
     }
 
+    public List<Cliente> getListadoCli() {
+        return listadoCli;
+    }
+
+    public void setListadoCli(List<Cliente> listadoCli) {
+        this.listadoCli = listadoCli;
+    }
+
+    public List<Cliente> getFilterCli() {
+        return filterCli;
+    }
+
+    public void setFilterCli(List<Cliente> filterCli) {
+        this.filterCli = filterCli;
+    }
 }

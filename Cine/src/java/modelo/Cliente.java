@@ -1,13 +1,12 @@
 package modelo;
 
-import java.util.Date;
 
 public class Cliente {
 
     private int IDCLI;
     private String NOMCLI;
     private String APECLI;
-    private Date NACCLI;
+    private String NACCLI;
     private String SEXCLI;
     private String ESTCLI;
 
@@ -35,13 +34,15 @@ public class Cliente {
         this.APECLI = APECLI;
     }
 
-    public Date getNACCLI() {
+    public String getNACCLI() {
         return NACCLI;
     }
 
-    public void setNACCLI(Date NACCLI) {
+    public void setNACCLI(String NACCLI) {
         this.NACCLI = NACCLI;
     }
+
+    
 
     public String getSEXCLI() {
         return SEXCLI;

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>CLIENTES</title>
+    </h:head> 
+
+    <h:body>
+        <ui:composition template="../Menu/Menu.xhtml">
+            <ui:define name="menu">
+                <p:growl id="growl" showDetail="true" >
+                    <p:autoUpdate/>
+                </p:growl>
+                <h:form>
+                    <center>
+                        <h1 style="color: #6699ff">REGISTROS DE CLIENTES</h1>
+                    </center>
+                </h:form>
+
+
+                <!--REGISTRO DE CLIENTES-->
+                <center>
+                    <h:form id="f_regEmpl"> 
+                        <p:panelGrid id="pg_regEmpl" columns="4">
+
+                            <p:outputLabel for="nombre" value="NOMBRE(S) "/> 
+                            <p:inputText id="nombre" value="#{ClienteC.persona.NOMCLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Nombre obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                            </p:inputText>  
+
+                            <p:outputLabel for="apellido" value="APELIDOS "/> 
+                            <p:inputText id="apellido" value="#{ClienteC.persona.APECLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Apellido obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                            </p:inputText>
+
+                            <p:outputLabel value="FECHA N. "/> 
+                            <p:inputText value="#{ClienteC.persona.NACCLI}" maxlength="150">
+                            </p:inputText>
+
+                            <p:outputLabel for="sexo" value="SEXO "/>
+                            <p:selectOneMenu id="sexo" value="#{ClienteC.persona.SEXCLI}" required="true" style="width: 225px"
+                                             requiredMessage="SELECCIONAR TIPO DE CLIENTE">
+                                <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                                <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                                <f:selectItem itemLabel="FEMENINO" itemValue="F" />                      
+                            </p:selectOneMenu> 
+                        </p:panelGrid>
+                        <p:commandButton value="GUARDAR" actionListener="#{ClienteC.registrar()}" update="pg_regEmpl :emple:listaP"
+                                         style="color: #ffffff; background-color: dodgerblue"/>
+                        <p:commandButton value="CANCELAR" style="color: #ffffff; background-color: #ff0033" 
+                                         process="@this" update="pg_regEmpl">
+                            <p:resetInput target="pg_regEmpl"/>
+                        </p:commandButton>
+                    </h:form>
+                </center>
+
+                <!--LISTA DE EMPLEADOS-->
+                <p:growl showDetail="true" id="messages">
+                    <p:autoUpdate/>
+                </p:growl>
+
+                <h:form id="emple">                
+                    <p:dataTable id="listaP" 
+                                 value="#{ClienteC.listadoCli}" 
+                                 var="lista"  
+                                 rows="10"
+                                 paginator="true" 
+                                 selection="#{ClienteC.personaEdit}" 
+                                 selectionMode="single" 
+                                 rowKey="#{lista.IDCLI}"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                        <f:facet name="header">
+                            LISTA DE CLIENTES
+                        </f:facet>
+
+                        <p:column headerText="NOMBRE(S)" style="font-weight: bold; color: #000000" width="90">
+                            <center>
+                                <h:outputText value="#{lista.NOMCLI}" style="color: black; font-weight: normal; text-transform: capitalize; font-family: cursive"/>
+                            </center>
+                        </p:column>   
+
+                        <p:column headerText="APELLIDOS" style="font-weight: bold; color: #000000" width="90">
+                            <center>
+                                <h:outputText value="#{lista.APECLI}" style="color: black; font-weight: normal; text-transform: capitalize; font-family: cursive"/>
+                            </center>
+                        </p:column>  
+
+                        <p:column headerText="FECHA N." style="font-weight: bold; color: #000000" width="165">
+                            <center>
+                                <h:outputText value="#{lista.NACCLI}" style="color: black; font-weight: normal; font-family: cursive"/>
+                            </center>
+                        </p:column>  
+
+                        <p:column headerText="SEXO" style="font-weight: bold; color: #000000" width="20">
+                            <center>
+                                <h:outputText value="#{lista.SEXCLI}" style="color: black; font-weight: normal; font-family: cursive"/>
+                            </center>
+                        </p:column>              
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="listaP">
+                        <p:menuitem value="MODIFICAR" icon="ui-icon-pencil" update=":modi" oncomplete="PF('wdlgDatos').show()"/>
+                        <p:menuitem value="ELIMINAR" update="listaP" icon="ui-icon-trash" action="#{ClienteC.eliminar()}"/>
+                    </p:contextMenu>
+                </h:form>
+
+
+                <!--FORMULARIO PARA MODIFICAR LOS DATOS DEL CLIENTES-->
+                <p:dialog id="modi" header="MODIFICAR LOS DATOS DEL CLIENTES:" modal="true" showEffect="fade" hideEffect="fade" resizable="false"  widgetVar="wdlgDatos">
+                    <h:form >
+                        <p:panelGrid columns="4">
+                            <p:outputLabel for="nombre" value="NOMBRE(S) "/> 
+                            <p:inputText id="nombre" value="#{ClienteC.personaEdit.NOMCLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Nombre obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                            </p:inputText>  
+
+                            <p:outputLabel for="apellido" value="APELIDOS "/> 
+                            <p:inputText id="apellido" value="#{ClienteC.personaEdit.APECLI}" maxlength="50" style="text-transform: capitalize"
+                                         required="true" requiredMessage="Añadir Apellido obligatorio">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ _á_é_í_ó_ú]/"/>
+                            </p:inputText>                   
+
+                            <p:outputLabel value="FECHA N. "/> 
+                            <p:inputText value="#{ClienteC.personaEdit.NACCLI}" maxlength="150"/>
+
+                            <p:outputLabel for="sexo" value="SEXO "/>
+                            <p:selectOneMenu id="sexo" value="#{ClienteC.personaEdit.SEXCLI}" required="true" style="width: 225px"
+                                             requiredMessage="SELECCIONAR TIPO DE CLIENTE">
+                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                                <f:selectItem itemLabel="FEMENINO" itemValue="F" />                      
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+
+                        <p:commandButton value="GUARDAR CAMBIOS" actionListener="#{ClienteC.modificar()}" update=":emple:listaP" 
+                                         style="color: #ffffff; background-color: #6699ff" oncomplete="PF('wdlgDatos').hide();"/>             
+                        <p:commandButton value="CANCELAR" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

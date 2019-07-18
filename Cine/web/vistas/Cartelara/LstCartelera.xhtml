@@ -95,7 +95,7 @@
                         <h:form>
                             <p:panelGrid columns="4">
                                 <p:outputLabel value="Pelicula"/>
-                                <p:selectOneMenu id="advanced" value="#{carteleraC.select.IDPEL}"  panelStyle="width:180px"
+                                <p:selectOneMenu id="advanced" value="#{carteleraC.cartelera.IDPEL}"  panelStyle="width:180px"
                                                  effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
                                     <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
                                 </p:selectOneMenu>

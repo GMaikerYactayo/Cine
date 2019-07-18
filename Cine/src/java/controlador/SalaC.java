@@ -40,6 +40,22 @@ public class SalaC implements Serializable{
             throw e;
         }
     }
+    
+    public boolean validarExistenciaSala(String numSala) {
+        try {
+            dao = new SalaImpl();
+            Sala salaValidacion = new Sala();
+            salaValidacion = dao.validarExistenciaSala(numSala);
+            String NUMSAL = salaValidacion.getNUMSAL().toLowerCase().trim();
+            if (NUMSAL.equals(numSala)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
 
     public void modificar() throws Exception {
         try {
@@ -109,5 +125,15 @@ public class SalaC implements Serializable{
     public void setListadoSal2(List<Sala> listadoSal2) {
         this.listadoSal2 = listadoSal2;
     }
+
+    public SalaImpl getDao() {
+        return dao;
+    }
+
+    public void setDao(SalaImpl dao) {
+        this.dao = dao;
+    }
+    
+    
 
 }

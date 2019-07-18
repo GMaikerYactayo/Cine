@@ -37,6 +37,7 @@ public class SalaImpl extends Conexion implements ICRUD<Sala>{
             ps.setString(1, sala.getCAPSAL());
             ps.setString(2, sala.getESTSAL());
             ps.setString(3, sala.getNUMSAL());
+            ps.setInt(4, sala.getIDSAL());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -89,6 +90,24 @@ public class SalaImpl extends Conexion implements ICRUD<Sala>{
         return listado;
     }
     
-    
+    public Sala validarExistenciaSala(String NUMSAL) throws Exception {
+        try {
+            this.conectar();
+            String sql = "Select IDSAL, NUMSAL from SALA where NUMSAL = '" + NUMSAL + "'";
+            Statement st = this.getCn().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            Sala sala = new Sala();
+            while (rs.next()) {
+                sala.setIDSAL(rs.getInt("IDSAL"));
+                sala.setNUMSAL(rs.getString("NUMSAL"));
+                break;
+            }
+            return sala;
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
+    }
     
 }

@@ -16,7 +16,9 @@
                     <h1 style="margin-top:0">Registrar sala</h1>
                     <p:panelGrid columns="2">
                         <p:outputLabel for="basic" value="Número de sala"/>
-                        <p:spinner id="basic" value="#{salaC.sala.NUMSAL}" />
+                        <p:spinner id="basic" value="#{salaC.sala.NUMSAL}" >
+                            <f:validator validatorId="validarExistenciaSala" />
+                        </p:spinner>
                         <p:outputLabel for="basi" value="Capacidad"/>
                         <p:spinner id="basi" value="#{salaC.sala.CAPSAL}" />
                     </p:panelGrid>
@@ -40,13 +42,18 @@
 
                     <p:autoUpdate />
 
-                    <p:column headerText="Capacidad">
-                        <h:outputText value="#{lista.CAPSAL}" />
-                    </p:column>
                     <p:column headerText="Numero de sala" >
-                        <h:outputText value="#{lista.NUMSAL}" />
+                        <center>
+                            <h:outputText value="#{lista.NUMSAL}" />
+                        </center>
                     </p:column>
-                    
+                    <p:column headerText="Capacidad">
+                        <center>
+                            <h:outputText value="#{lista.CAPSAL}" />
+                        </center>
+                    </p:column>
+
+
 
                     <f:facet name="footer">
                         EN TOTAL HAY #{fn:length(salaC.listadoSal)} REGISTROS.

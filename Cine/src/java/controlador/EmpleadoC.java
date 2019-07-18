@@ -5,10 +5,13 @@
  */
 package controlador;
 
+import Reportes.report;
 import dao.EmpleadoImpl;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -93,6 +96,18 @@ public class EmpleadoC implements Serializable {
     public List<String> completeTextUbigeo(String query) throws SQLException, Exception {
         EmpleadoImpl daoEmp = new EmpleadoImpl();
         return daoEmp.autocompleteUbigeo(query);
+    }
+
+    public void REPORTE_PDF_CLIENTE(String empleado) throws Exception {
+        report reportEmp = new report();
+        try {
+            Map<String, Object> parameters = new HashMap(); // Libro de parametros
+            parameters.put(null, empleado); //Insertamos un parametro
+            reportEmp.exportarPDF_Empleado(parameters);//Pido exportar Reporte con los parametros
+//            report.exportarPDF2(parameters);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     //CÓDIGO GENEREDO

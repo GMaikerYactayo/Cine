@@ -1,5 +1,6 @@
 package controlador;
 
+import Reportes.report;
 import dao.CarteleraImpl;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -7,8 +8,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -23,7 +26,7 @@ public class CarteleraC implements Serializable {
     private List<Cartelera> listadoCar;
     CarteleraImpl dao;
     SimpleDateFormat formateador = new SimpleDateFormat("dd/MMM/yyyy");
-    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH);
+    SimpleDateFormat sdf_d = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
     private Date fechaFormulario;
 
     @PostConstruct
@@ -38,7 +41,7 @@ public class CarteleraC implements Serializable {
         System.out.println(sdf_d.parse(select.getFECCAR()));
         fechaFormulario = sdf_d.parse(select.getFECCAR());
     }
-    
+
     public void registrar() throws Exception {
         try {
             dao = new CarteleraImpl();
@@ -82,6 +85,18 @@ public class CarteleraC implements Serializable {
         try {
             dao = new CarteleraImpl();
             listadoCar = dao.listar();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void REPORTE_PDF_CARTELERA(String cartelera) throws Exception {
+        report reportCarte = new report();
+        try {
+            Map<String, Object> parameters = new HashMap(); // Libro de parametros
+            parameters.put(null, cartelera); //Insertamos un parametro
+            reportCarte.exportarPDF_Cartelera(parameters);//Pido exportar Reporte con los parametros
+//            report.exportarPDF2(parameters);
         } catch (Exception e) {
             throw e;
         }
@@ -151,6 +166,4 @@ public class CarteleraC implements Serializable {
         this.sdf_d = sdf_d;
     }
 
-    
-    
 }

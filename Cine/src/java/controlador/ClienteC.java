@@ -1,5 +1,6 @@
 package controlador;
 
+import Reportes.report;
 import dao.ClienteImpl;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -99,6 +100,17 @@ public class ClienteC implements Serializable {
 //        }
 //    }
     
+     public void REPORTE_PDF_CLIENTE(String cliente) throws Exception {
+        report reportCLi = new report();
+        try {
+            Map<String, Object> parameters = new HashMap(); // Libro de parametros
+            parameters.put(null, cliente); //Insertamos un parametro
+            reportCLi.exportarPDF_Cliente(parameters);//Pido exportar Reporte con los parametros
+//            report.exportarPDF2(parameters);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     public void limpiar() {
         persona = new Cliente();
     }

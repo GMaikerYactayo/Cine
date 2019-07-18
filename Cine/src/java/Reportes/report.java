@@ -32,7 +32,33 @@ public class report extends Conexion {
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/Cartelera.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=PELICULA.pdf");
+        response.addHeader("Content-disposition", "attachment; filename=Cartelera.pdf");
+        try (ServletOutputStream stream = response.getOutputStream()) {
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+            stream.flush();
+        }
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+    
+    public void exportarPDF_Cliente(Map parameters) throws JRException, IOException, Exception {
+        this.conectar();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/Cliente.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=CLIENTE.pdf");
+        try (ServletOutputStream stream = response.getOutputStream()) {
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+            stream.flush();
+        }
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+    
+    public void exportarPDF_Empleado(Map parameters) throws JRException, IOException, Exception {
+        this.conectar();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/Empleado.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=EMPLEADO.pdf");
         try (ServletOutputStream stream = response.getOutputStream()) {
             JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
             stream.flush();

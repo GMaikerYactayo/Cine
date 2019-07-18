@@ -11,102 +11,114 @@
 
     </h:head>
     <h:body>
-        <p:growl id="growl" showDetail="true" >
-            <p:autoUpdate/>
-        </p:growl>
-        <center>
-            <h:form>
-                <h:form id="formIns">
-                    <h1 style="margin-top:0">Registrar cartelera</h1>
-                    <p:panelGrid columns="4">
-                        <p:outputLabel value="Pelicula"/>
-                        <p:selectOneMenu id="advanced" value="#{carteleraC.cartelera.IDPEL}"  panelStyle="width:180px"
-                                         effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
-                            <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Hora"/>
-                        <p:inputMask value="#{carteleraC.cartelera.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
-                        <p:outputLabel value="Fecha"   />
-                        <p:calendar id="button" value="#{carteleraC.fechaFormulario}"  showOn="button" navigator="true" pattern="dd/MMM/yyyy" 
-                                    required="true" style="width: 400px" requiredMessage="Se requiere la fecha"/>
-                        <p:outputLabel value="Precio"/>
-                        <p:inputNumber value="#{carteleraC.cartelera.PRECAR}" required="true" decimalPlaces="2" 
-                                       maxValue="99.99"
-                                       requiredMessage="Se nesecita el precio"/>
-                    </p:panelGrid>
-                    <p:commandButton value="Registrar" actionListener="#{carteleraC.registrar()}" /> 
-                </h:form>
+        <ui:composition template="../Menu/Menu.xhtml">
+            <ui:define name="menu">
+                <p:growl id="growl" showDetail="true" >
+                    <p:autoUpdate/>
+                </p:growl>
+                <center>
+                    <h:form>
+                        <h:form id="formIns">
+                            <h1 style="margin-top:0">Registrar cartelera</h1>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Pelicula"/>
+                                <p:selectOneMenu id="advanced" value="#{carteleraC.cartelera.IDPEL}"  panelStyle="width:180px"
+                                                 effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Hora"/>
+                                <p:inputMask value="#{carteleraC.cartelera.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
+                                <p:outputLabel value="Fecha"   />
+                                <p:calendar id="button" value="#{carteleraC.fechaFormulario}"  showOn="button" navigator="true" pattern="dd/MMM/yyyy" 
+                                            required="true" style="width: 400px" requiredMessage="Se requiere la fecha"/>
+                                <p:outputLabel value="Precio"/>
+                                <p:inputNumber value="#{carteleraC.cartelera.PRECAR}" required="true" decimalPlaces="2" 
+                                               maxValue="99.99"
+                                               requiredMessage="Se nesecita el precio"/>
+                            </p:panelGrid>
+                            <p:commandButton value="Registrar" actionListener="#{carteleraC.registrar()}" /> 
+                        </h:form>
 
-            </h:form>
+                    </h:form>
 
-            <p:spacer/>
-            <h:form id="form">
-                <p:dataTable value="#{carteleraC.listadoCar}" 
-                             var="lista" 
-                             id="dtTable" 
-                             selectionMode="single"
-                             selection="#{carteleraC.select}"
-                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             paginator="true" 
-                             rowKey="#{lista.IDCAR}"
-                             rows="6" 
-                             style="margin-bottom:20px">
+                    <p:spacer/>
+                    <h:form id="form">
+                        <p:dataTable value="#{carteleraC.listadoCar}" 
+                                     var="lista" 
+                                     id="dtTable" 
+                                     selectionMode="single"
+                                     selection="#{carteleraC.select}"
+                                     paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginator="true" 
+                                     rowKey="#{lista.IDCAR}"
+                                     rows="6" 
+                                     style="margin-bottom:20px">
 
-                    <p:autoUpdate />
+                            <p:autoUpdate />
 
-                    <p:column headerText="Pelicula">
-                        <h:outputText value="#{lista.NOMPEL}" />
-                    </p:column>
-                    <p:column headerText="Hora" >
-                        <h:outputText value="#{lista.HORCAR}" />
-                    </p:column>
-                    <p:column headerText="Fecha" >
-                        <h:outputText value="#{lista.FECCAR}" />
-                    </p:column>
-                    <p:column headerText="Precio" >
-                        <h:outputText value="#{lista.PRECAR}" />
-                    </p:column>
+                            <f:facet name="header">
+                                CARTELERA
+                                <div style="float:right;padding-top: 5px;">
+                                    <h:commandLink actionListener="#{carteleraC.REPORTE_PDF_CARTELERA(cartelera)}">
+                                        <p:graphicImage url="../../icon/PDF-logo.png" width="35" title="Descargar Reporte"/>
+                                    </h:commandLink>
+                                </div>
+                            </f:facet   >
+                            <p:column headerText="Pelicula">
+                                <h:outputText value="#{lista.NOMPEL}" />
+                            </p:column>
+                            <p:column headerText="Hora" >
+                                <h:outputText value="#{lista.HORCAR}" />
+                            </p:column>
+                            <p:column headerText="Fecha" >
+                                <h:outputText value="#{lista.FECCAR}" />
+                            </p:column>
+                            <p:column headerText="Precio" >
+                                <h:outputText value="#{lista.PRECAR}" />
+                            </p:column>
 
-                    <f:facet name="footer">
-                        <h:commandLink actionListener="#{empresaC.REPORTE_PDF_EMPRESA(CodigoEMPRESA)}" >
-                            <p:graphicImage url="../../icon/PDF-logo.png" width="50" title="Descargar Reporte"/>
-                        </h:commandLink>
-                        EN TOTAL HAY #{fn:length(carteleraC.listadoCar)} REGISTROS.
-                    </f:facet>
-                </p:dataTable>
-                <p:contextMenu for="dtTable">
-                    <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" actionListener="#{carteleraC.rellenar()}"  
-                                oncomplete="PF('wdlgDatos').show()"/>
-                    <p:menuitem value="Eliminar" update="form:dtTable" icon="ui-icon-circle-close" actionListener="#{carteleraC.eliminar()}"/>
-                </p:contextMenu>
-            </h:form>
-            <p:dialog showEffect="explode" modal="true" hideEffect="explode"
-                      id="dlgDatos" widgetVar="wdlgDatos" >
-                <h:form>
-                    <p:panelGrid columns="4">
-                        <p:outputLabel value="Pelicula"/>
-                        <p:selectOneMenu id="advanced" value="#{carteleraC.select.IDPEL}"  panelStyle="width:180px"
-                                         effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
-                            <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Hora"/>
-                        <p:inputMask value="#{carteleraC.select.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
-                        <p:outputLabel value="Fecha"   />
-                        <p:calendar id="button" value="#{carteleraC.fechaFormulario}"  showOn="button" navigator="true" pattern="dd/MMM/yyyy" 
-                                    required="true" style="width: 400px" requiredMessage="Se requiere la fecha"/>
-                        <p:outputLabel value="Precio"/>
-                        <p:inputNumber value="#{carteleraC.select.PRECAR}" required="true" decimalPlaces="2" 
-                                       maxValue="99.99"
-                                       requiredMessage="Se nesecita el precio"/>
-                    </p:panelGrid>
+                            <f:facet name="footer">
+                                <h:commandLink actionListener="#{empresaC.REPORTE_PDF_EMPRESA(CodigoEMPRESA)}" >
+                                    <p:graphicImage url="../../imagenes/PDF-logo.png" width="50" title="Descargar Reporte"/>
+                                </h:commandLink>
+                                EN TOTAL HAY #{fn:length(carteleraC.listadoCar)} REGISTROS.
+                            </f:facet>
+                        </p:dataTable>
+                        <p:contextMenu for="dtTable">
+                            <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" actionListener="#{carteleraC.rellenar()}"  
+                                        oncomplete="PF('wdlgDatos').show()"/>
+                            <p:menuitem value="Eliminar" update="form:dtTable" icon="ui-icon-circle-close" actionListener="#{carteleraC.eliminar()}"/>
+                        </p:contextMenu>
+                    </h:form>
+                    <p:dialog showEffect="explode" modal="true" hideEffect="explode"
+                              id="dlgDatos" widgetVar="wdlgDatos" >
+                        <h:form>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Pelicula"/>
+                                <p:selectOneMenu id="advanced" value="#{carteleraC.select.IDPEL}"  panelStyle="width:180px"
+                                                 effect="fade" var="t" style="width: 220px" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItems value="#{peliculaC.listadoPel}" var="lis" itemLabel="#{lis.NOMPEL}" itemValue="#{lis.IDPEL}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Hora"/>
+                                <p:inputMask value="#{carteleraC.select.HORCAR}" mask="99:99" required="true" requiredMessage="Se nesecita la hora"/>
+                                <p:outputLabel value="Fecha"   />
+                                <p:calendar id="button" value="#{carteleraC.fechaFormulario}"  showOn="button" navigator="true" pattern="dd/MMM/yyyy" 
+                                            required="true" style="width: 400px" requiredMessage="Se requiere la fecha"/>
+                                <p:outputLabel value="Precio"/>
+                                <p:inputNumber value="#{carteleraC.select.PRECAR}" required="true" decimalPlaces="2" 
+                                               maxValue="99.99"
+                                               requiredMessage="Se nesecita el precio"/>
+                            </p:panelGrid>
 
-                    <p:commandButton value="Actualizar" actionListener="#{carteleraC.modificar()}"
-                                     update=":form:dtTable" oncomplete="PF('wdlgDatos').hide();">           
-                        <p:tooltip trackMouse="true"/>
-                    </p:commandButton>
-                    <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
-                </h:form>
-            </p:dialog>
-        </center>
+                            <p:commandButton value="Actualizar" actionListener="#{carteleraC.modificar()}"
+                                             update=":form:dtTable" oncomplete="PF('wdlgDatos').hide();">           
+                                <p:tooltip trackMouse="true"/>
+                            </p:commandButton>
+                            <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+                        </h:form>
+                    </p:dialog>
+                </center>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
